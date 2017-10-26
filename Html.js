@@ -1,16 +1,27 @@
 import * as React from "react";
-import { ServerStyleSheet } from "styled-components";
+import { StyleSheetServer } from "aphrodite/no-important";
 
 export default ({ App, render }: PhenomicHtmlPropsType) => {
-  const sheet = new ServerStyleSheet();
-  const { Main, State, Script } = render(sheet.collectStyles(<App />));
+  const {
+    html: { Main, State, Script },
+    css
+  } = StyleSheetServer.renderStatic(() => render(<App />));
 
   return (
     <html>
-      <head>{sheet.getStyleElement()}</head>
+      <head>
+        <style data-aphrodite>{css.content}</style>
+      </head>
       <body>
         <Main />
         <State />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window._aphrodite = ${JSON.stringify(
+              css.renderedClassNames
+            )}`
+          }}
+        />
         <Script />
       </body>
     </html>

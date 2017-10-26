@@ -1,26 +1,37 @@
-import React from "react";
+import * as React from "react";
+import ReactBootstrap, { Button, ButtonGroup, DropdownButton, MenuItem } from 'react-bootstrap';
 import { Router, Route, browserHistory } from "react-router";
 import { createApp } from "@phenomic/preset-react-app/lib/client";
-import ReactBootstrap, { Button, ButtonGroup, DropdownButton, MenuItem } from 'react-bootstrap';
+import { StyleSheet, css } from "aphrodite/no-important";
 
-//import './assets/plugins/bootstrap/css/bootstrap.min.css';
+import './assets/plugins/bootstrap/css/bootstrap.css';
 
-const Home = () => (
-  <div>
-    <p>This is a homepage</p>
+if (typeof window !== "undefined" && window._aphrodite) {
+  StyleSheet.rehydrate(window._aphrodite);
+}
 
-    <Button>Default</Button>
-    <Button bsStyle="primary">Primary</Button>
-    <Button bsStyle="success">Success</Button>
-    <Button bsStyle="info">Info</Button>
-    <Button bsStyle="warning">Warning</Button>
-    <Button bsStyle="danger">Danger</Button>
-    <Button bsStyle="link">Link</Button>
-  </div>
-);
+const styles = StyleSheet.create({
+  title: {
+    fontSize: "1.5em",
+    textAlign: "center",
+    color: "palevioletred"
+  },
+  title2: {
+    fontSize: "2em",
+    textAlign: "right",
+    color: "blue"
+  }
+});
 
 export default createApp(() => (
   <Router history={browserHistory}>
-    <Route path="/" component={Home} />
+    <Route
+      path="/"
+      component={() => <h1 className={css(styles.title)}>Hello World!!!!</h1>}
+    />
+    <Route
+      path="/2"
+      component={() => <h1 className={css(styles.title2)}>Hello again!</h1>}
+    />
   </Router>
 ));

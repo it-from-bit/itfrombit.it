@@ -23,6 +23,7 @@
     ]
   },
   "dependencies": {
+    "aphrodite": "^1.2.5",
     "react-bootstrap": "^0.31.5"
   }
 }
