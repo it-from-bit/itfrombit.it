@@ -1,27 +1,26 @@
 import * as React from "react";
-import { StyleSheetServer } from "aphrodite/no-important";
+import Head from "react-helmet";
 
 export default ({ App, render }: PhenomicHtmlPropsType) => {
-  const {
-    html: { Main, State, Script },
-    css
-  } = StyleSheetServer.renderStatic(() => render(<App />));
-
+  // if needed, you can know if you are in development or in static rendering
+  // const isDev = process.env.PHENOMIC_ENV === "development"
+  const { Main, State, Script, Style } = render(<App />);
+  const helmet = Head.renderStatic();
   return (
-    <html>
+    <html {...helmet.htmlAttributes.toComponent()}>
       <head>
-        <style data-aphrodite>{css.content}</style>
+        {helmet.meta.toComponent()}
+        {helmet.title.toComponent()}
+        {helmet.base.toComponent()}
+        <Style />
+        {helmet.link.toComponent()}
+        {helmet.style.toComponent()}
+        {helmet.script.toComponent()}
+        {helmet.noscript.toComponent()}
       </head>
-      <body>
+      <body {...helmet.bodyAttributes.toComponent()}>
         <Main />
         <State />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window._aphrodite = ${JSON.stringify(
-              css.renderedClassNames
-            )}`
-          }}
-        />
         <Script />
       </body>
     </html>
