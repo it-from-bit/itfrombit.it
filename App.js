@@ -9,6 +9,7 @@ import {
   BodyRenderer,
   textRenderer
 } from "@phenomic/preset-react-app/lib/client";
+import './assets/css/style.css';
 
 const Home = ({ isLoading, posts }) => (
   <Layout>
@@ -91,9 +92,26 @@ const HeroPostLayout = ({ title, body }) => (
   </article>
 );
 
+const FoobarPostLayout = ({ title, body }) => (
+  <article>
+    <Head>
+      <title>{title}</title>
+      <meta
+        name="description"
+        content={textRenderer(body).slice(0, 150) + "…"}
+      />
+    </Head>
+    <div style={{ padding: "4rem", background: "#d6d6d6", color: "#fff" }}>
+      <h1>{title}</h1>
+    </div>
+    <BodyRenderer>{body}</BodyRenderer>
+  </article>
+);
+
 const PostLayouts = {
-  default: DefaultPostLayout,
-  hero: HeroPostLayout
+  default   : DefaultPostLayout,
+  hero      : HeroPostLayout,
+  foobar    : FoobarPostLayout
 };
 
 const BlogPost = ({ hasError, isLoading, page }) => {
@@ -136,15 +154,23 @@ const PageError = ({ error }) => {
 };
 
 const Layout = ({ children }) => (
-  <div>
+  <div id="container">
     <Head>
       <html lang="en" />
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
     </Head>
-    <header>{/* ... */}</header>
-    <div>{children}</div>
-    <footer>{/* ... */}</footer>
+    <header>Header stuff...</header>
+    <div id="top-menu">
+      <ul>
+        <li><a className="active" href="#home">Home</a></li>
+        <li><a href="#news">Categories</a></li>
+        <li><a href="#contact">Articles</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </div>
+    <div id="content">{children}</div>
+    <footer>Footer stuff...</footer>
   </div>
 );
 

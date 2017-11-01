@@ -6,6 +6,7 @@ export default ({ App, render }: PhenomicHtmlPropsType) => {
   // const isDev = process.env.PHENOMIC_ENV === "development"
   const { Main, State, Script, Style } = render(<App />);
   const helmet = Head.renderStatic();
+  const foo = (helmet.string_val ? helmet.string_val : 'N/A;')
   return (
     <html {...helmet.htmlAttributes.toComponent()}>
       <head>
